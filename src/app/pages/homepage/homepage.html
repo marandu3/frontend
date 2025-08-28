@@ -1,34 +1,84 @@
-<div>
-    <div class="w-full  flex flex-col gap-2 justify-center items-center mt-4">
-        <div class="font-bold flex center">
-            <div
-                class="font-bold text-6xl flex text-transparent bg-gradient-to-r from-blue-300 via-green-500 to-yellow-400 bg-clip-text ">
-                Computer</div>
-        </div>
-        <div class="font-bold text-6xl flex center">
-            Engineering
-        </div>
-        <div class="font-bold flex center">
-            <div
-                class="font-bold text-6xl flex text-transparent bg-gradient-to-r from-blue-300 via-green-500 to-yellow-400 bg-clip-text ">
-                Student</div>
-        </div>
+<div class="w-full min-h-screen flex flex-col items-center justify-start bg-gradient-to-b from-blue-900 via-[#5a17be] to-purple-900 text-white px-6 relative pt-3">
+
+    <!-- Profile Image (clickable) -->
+    <div class="w-60 h-60 rounded-full overflow-hidden shadow-2xl border-4 border-blue-400 animate-fade-in cursor-pointer"
+         onclick="document.getElementById('photoModal').classList.remove('hidden')">
+        <img src="profile.jpeg" alt="Profile Photo" class="w-full h-full object-cover">
     </div>
 
-    <section class="mt-6 text-center w-3/4 flex justify-self-center text-gray-400 text-lg font-medium px-4 md:px-20 lg:px-40">
-        <div>
-            <p>
-                Passionate about creating solutions with love for technology. I thrive on creating innovative solutions
-                and exploring the ever-evolving world of
-                software development. Welcome to my portfolio!
-            </p>
-        </div>
+    <!-- Name & Title -->
+    <div class="mt-3 text-center">
+        <h1 class="text-6xl font-extrabold bg-gradient-to-r from-blue-300 via-green-400 to-yellow-400 bg-clip-text text-transparent animate-pulse">
+            Computer
+        </h1>
+        <h1 class="text-6xl font-extrabold">Engineering</h1>
+        <h1 class="text-6xl font-extrabold bg-gradient-to-r from-blue-300 via-green-400 to-yellow-400 bg-clip-text text-transparent">
+            Student
+        </h1>
+    </div>
+
+    <!-- Short Description -->
+    <section class="mt-6 max-w-2xl text-center text-gray-300 text-lg font-medium leading-relaxed">
+        <p>
+            Passionate about building impactful solutions with a love for technology. 
+            I thrive on innovation, creative problem-solving, and exploring the ever-evolving world of software development. 
+            Welcome to my portfolio!
+        </p>
     </section>
 
-    <!--the section for putting the social media links and icons -->
-    <section class="mt-6 flex justify-center items-center gap-6">
-        
+    <!-- Social Media Icons -->
+    <section class="mt-8 flex justify-center items-center gap-8">
+        <a href="#" class="transform hover:scale-110 transition duration-300">
+            <i class="pi pi-linkedin" style="font-size: 3rem; color: #0077b5;"></i>
+        </a>
+        <a href="#" class="transform hover:scale-110 transition duration-300">
+            <i class="pi pi-github rounded-full" style="font-size: 3rem; color: white; background-color: black;"></i>
+        </a>
+        <a href="#" class="transform hover:scale-110 transition duration-300">
+            <i class="pi pi-whatsapp rounded-full" style="font-size: 3rem; color: white; background-color: #25D366;"></i>
+        </a>
+        <a href="mailto:johnwillymarandu@gmail.com" class="transform hover:scale-110 transition duration-300">
+            <i class="pi pi-envelope" style="font-size: 3rem; color: #ff5722;"></i>
+        </a>
     </section>
 
-
+    <!-- Scroll Down Arrow -->
+    <div class="absolute bottom-16 flex justify-center animate-bounce">
+        <a href="#about">
+            <i class="pi pi-arrow-circle-down text-gray-400 hover:text-white transition" style="font-size: 3.5rem; cursor: pointer;"></i>
+        </a>
+    </div>
 </div>
+
+
+<!-- Modal (Hidden by default) -->
+<div id="photoModal" 
+     class="hidden fixed inset-0 bg-black/50 backdrop-blur-md flex flex-col items-center justify-center z-50">
+    
+    <!-- Profile Circle -->
+    <div class="relative w-80 h-80 rounded-full overflow-hidden shadow-2xl border-4 border-blue-400 animate-scale-in bg-white/10 backdrop-blur-lg">
+        <img src="profile.jpeg" alt="Profile Modal" class="w-full h-full object-cover">
+        <!-- Close X Button -->
+        <button class="absolute top-2 right-2 bg-white text-black rounded-full px-2 py-1 text-sm font-bold shadow-md"
+                onclick="document.getElementById('photoModal').classList.add('hidden')">
+            ✕
+        </button>
+    </div>
+
+    <!-- Cancel Button -->
+    <button class="mt-6 px-6 py-2 bg-white/20 backdrop-blur-lg hover:bg-white/30 rounded-full text-white font-semibold shadow-lg transition"
+            onclick="document.getElementById('photoModal').classList.add('hidden')">
+        Cancel
+    </button>
+</div>
+
+<!-- Small animation -->
+<style>
+@keyframes scaleIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out;
+}
+</style>
