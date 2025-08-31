@@ -1,11 +1,70 @@
 <div>
-   <p class="text-5xl font-bold text-center text-white">
-    About <span class="bg-[linear-gradient(to_right,rgb(163,0,163),rgb(0,221,255),rgb(167,249,45),rgb(238,238,2))] text-transparent bg-clip-text">Me</span>
+  <p class="text-5xl font-bold text-center text-white">
+    About <span
+      class="bg-[linear-gradient(to_right,rgb(163,0,163),rgb(0,221,255),rgb(167,249,45),rgb(238,238,2))] text-transparent bg-clip-text">
+      Me
+    </span>
   </p>
-  <p class="text-gray-400 mt-3 font-medium text-2xl w-[75%] flex justify-self-center text-center ">I'm a dedicated Computer Engineering student with passion for innovation, problem-solving, and creating technology that makes a difference.</p>
 
-  <div class="grid grid-cols-2 gap-4 mt-10 w-[100%] h-screen">
-    <div class="bg-red-500"></div>
-    <div class="bg-blue-500"></div>
+  <p class="text-gray-400 mt-3 font-medium text-2xl w-[75%] mx-auto text-center">
+    I'm a dedicated Computer Engineering student with passion for innovation, problem-solving, and creating technology
+    that makes a difference.
+  </p>
+
+  <!-- Content grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10 w-full">
+    
+    <!-- Left column (Education) -->
+    <div>
+      <div class="text-3xl font-bold flex gap-4 items-center text-white mb-6">
+        <i class="pi pi-graduation-cap text-purple-500" style="font-size: 2.5rem;"></i>
+        <p>Education</p>
+      </div>
+
+      <div>
+        <app-card
+          title="Portfolio Website"
+          description="A personal portfolio to showcase my projects and skills."
+          image="assets/portfolio.png"
+          [progress]="70"
+          duration="Feb - Apr 2025">
+        </app-card>
+      </div>
+    </div>
+
+    <!-- Right column (Skills) -->
+    <div>
+      <div class="text-3xl font-bold text-white mb-6">
+        <p>Skills</p>
+      </div>
+
+      <!-- Arrange tech cards vertically -->
+      <div class="flex flex-col gap-6">
+        <app-techcard
+          category="Programming Languages"
+          [skills]="['Python', 'C++', 'JavaScript', 'TypeScript']">
+        </app-techcard>
+
+        <app-techcard
+          category="Web"
+          [skills]="['HTML', 'CSS', 'Angular', 'React', 'FastAPI']">
+        </app-techcard>
+
+        <app-techcard
+          category="Database"
+          [skills]="['MongoDB', 'MySQL', 'PostgreSQL']">
+        </app-techcard>
+
+        <app-techcard
+          category="Mobile Development"
+          [skills]="['Flutter', 'React Native']">
+        </app-techcard>
+
+        <app-techcard
+          category="Hardware"
+          [skills]="['Arduino', 'Raspberry Pi', 'FPGA']">
+        </app-techcard>
+      </div>
+    </div>
   </div>
 </div>

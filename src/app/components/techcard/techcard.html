@@ -1,0 +1,22 @@
+<div
+  class="w-full max-w-md rounded-2xl shadow-lg p-6 
+         bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 
+         border border-gray-700
+         transform transition duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-purple-500/30">
+
+  <!-- Title with icon -->
+  <div class="flex items-center space-x-3 mb-4">
+    <span class="text-3xl">{{ icon }}</span>
+    <h2 class="text-xl font-semibold text-white tracking-wide">{{ category }}</h2>
+  </div>
+
+  <!-- Skills row -->
+  <div class="flex flex-wrap gap-2">
+    <div *ngFor="let skill of skills"
+         class="px-3 py-1 bg-gradient-to-r from-purple-600 to-blue-600 
+                text-white text-sm font-medium rounded-full shadow-md 
+                hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300">
+      {{ skill }}
+    </div>
+  </div>
+</div>
