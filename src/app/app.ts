@@ -12,7 +12,8 @@ import { Contact } from "./pages/contact/contact";
   selector: 'app-root',
   imports: [Navbar, CommonModule, Homepage, About, Project, Contact],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
+  standalone: true
 })
 export class App {
   protected readonly title = signal('frontend');
