@@ -6,11 +6,14 @@ import { Homepage } from "./pages/homepage/homepage";
 import { About } from "./pages/about/about";
 import { Project } from './pages/project/project';
 import { Contact } from "./pages/contact/contact";
+import { Education } from './pages/education/education';
+import { Timeline } from './pages/timeline/timeline';
+
 
 
 @Component({
   selector: 'app-root',
-  imports: [Navbar, CommonModule, Homepage, About, Project, Contact],
+  imports: [Navbar, CommonModule, Homepage, About, Project, Contact, Education, Timeline],
   templateUrl: './app.html',
   styleUrl: './app.css',
   standalone: true

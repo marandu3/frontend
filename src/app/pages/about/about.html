@@ -1,4 +1,6 @@
-<div>
+<div class="w-full mt-20 px-6">
+
+  <!-- Title -->
   <p class="text-5xl font-bold text-center text-white">
     About <span
       class="bg-[linear-gradient(to_right,rgb(163,0,163),rgb(0,221,255),rgb(167,249,45),rgb(238,238,2))] text-transparent bg-clip-text">
@@ -7,57 +9,55 @@
   </p>
 
   <p class="text-gray-400 mt-3 font-medium text-2xl w-[75%] mx-auto text-center">
-    I'm a dedicated Computer Engineering student with passion for innovation, problem-solving, and creating technology
-    that makes a difference.
+    I'm a dedicated Computer Engineering student with passion for innovation, problem-solving, and building technology
+    that matters.
   </p>
 
-  <!-- Content grid -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10 w-full">
-    
-    <!-- Left column (Education) -->
-    <div>
-      <div class="text-3xl font-bold flex gap-4 items-center text-white mb-6">
-        <i class="pi pi-graduation-cap text-purple-500" style="font-size: 2.5rem;"></i>
-        <p>Education</p>
+
+  <!-- Skills Section -->
+  <div class="mt-16 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+
+    <!-- Skeleton loaders -->
+    <ng-container *ngIf="loading">
+      <div class="h-48 bg-gray-800 rounded-xl animate-pulse"></div>
+      <div class="h-48 bg-gray-800 rounded-xl animate-pulse"></div>
+      <div class="h-48 bg-gray-800 rounded-xl animate-pulse"></div>
+    </ng-container>
+
+    <!-- Category Cards -->
+    <ng-container *ngIf="!loading">
+      <div *ngFor="let category of (groupedSkills | keyvalue)"
+           class="bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-700 hover:border-purple-500 transition-all">
+
+        <!-- Category title -->
+        <p class="text-2xl font-bold text-white mb-4">
+          {{ category.key }}
+        </p>
+
+        <!-- Skills list -->
+        <div class="flex flex-col gap-4">
+          <div *ngFor="let skill of $any(category.value)"
+               class="flex items-center gap-4 p-4 bg-gray-800 rounded-xl hover:bg-gray-700 transition-all">
+
+            <!-- Icon -->
+            <img *ngIf="skill.icon_url"
+                 class="w-12 h-12 rounded-lg object-cover border border-gray-600"
+                 [src]="skill.icon_url"
+                 [alt]="skill.name">
+
+            <!-- Info -->
+            <div class="flex-1">
+              <p class="text-lg font-semibold text-white">{{ skill.name }}</p>
+              <p class="text-gray-400 text-sm">
+                {{ skill.description }}
+              </p>
+            </div>
+
+          </div>
+        </div>
+
       </div>
+    </ng-container>
 
-      <div>
-      </div>
-    </div>
-
-    <!-- Right column (Skills) -->
-    <div>
-      <div class="text-3xl font-bold text-white mb-6">
-        <p>Skills</p>
-      </div>
-
-      <!-- Arrange tech cards vertically -->
-      <div class="flex flex-col gap-6">
-        <app-techcard
-          category="Programming Languages"
-          [skills]="['Python', 'C++', 'JavaScript', 'TypeScript']">
-        </app-techcard>
-
-        <app-techcard
-          category="Web"
-          [skills]="['HTML', 'CSS', 'Angular', 'React', 'FastAPI']">
-        </app-techcard>
-
-        <app-techcard
-          category="Database"
-          [skills]="['MongoDB', 'MySQL', 'PostgreSQL']">
-        </app-techcard>
-
-        <app-techcard
-          category="Mobile Development"
-          [skills]="['Flutter', 'React Native']">
-        </app-techcard>
-
-        <app-techcard
-          category="Hardware"
-          [skills]="['Arduino', 'Raspberry Pi', 'FPGA']">
-        </app-techcard>
-      </div>
-    </div>
   </div>
 </div>

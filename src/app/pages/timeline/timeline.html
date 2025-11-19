@@ -1,0 +1,80 @@
+<div class="w-full mt-20 px-6">
+
+  <!-- Title -->
+  <p class="text-5xl font-bold text-center text-white">
+    My
+    <span class="bg-[linear-gradient(to_right,rgb(163,0,163),rgb(0,221,255),rgb(167,249,45),rgb(238,238,2))]
+                 text-transparent bg-clip-text">
+      Timeline
+    </span>
+  </p>
+
+  <p class="text-gray-400 mt-3 font-medium text-2xl max-w-3xl mx-auto text-center">
+    A visual journey through key milestones of my growth.
+  </p>
+
+
+  <!-- Timeline Container -->
+  <div class="relative mt-16 max-w-4xl mx-auto">
+
+    <!-- Vertical Line -->
+    <div class="absolute left-6 top-0 w-1 h-full bg-gray-700 rounded-full"></div>
+
+
+    <!-- Loading -->
+    <ng-container *ngIf="loading">
+      <div class="h-24 bg-gray-800 rounded-xl animate-pulse mb-6"></div>
+      <div class="h-24 bg-gray-800 rounded-xl animate-pulse mb-6"></div>
+      <div class="h-24 bg-gray-800 rounded-xl animate-pulse mb-6"></div>
+    </ng-container>
+
+
+    <!-- Timeline Events -->
+    <ng-container *ngIf="!loading">
+
+      <div *ngFor="let item of timeline; let i = index"
+        class="relative pl-20 mb-14 group">
+
+        <!-- Bullet Icon -->
+        <div
+          class="absolute left-3 top-2 w-8 h-8 bg-gray-900 border-4 border-blue-400 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition">
+          <i [class]="chooseIcon(item.title) + ' text-blue-400 text-lg'"></i>
+        </div>
+
+        <!-- Card -->
+        <div
+          class="bg-gray-900 border border-gray-700 rounded-2xl p-6 shadow-lg 
+                 group-hover:border-blue-400 group-hover:shadow-blue-500/20 
+                 transition-all duration-300">
+
+          <!-- Title -->
+          <p class="text-xl font-bold text-white">{{ item.title }}</p>
+
+          <!-- Description -->
+          <p class="text-gray-400 mt-2 leading-relaxed">
+            {{ item.description }}
+          </p>
+
+          <!-- Location -->
+          <p class="text-gray-300 mt-3">
+            <span class="font-semibold text-white">Location:</span>
+            {{ item.location }}
+          </p>
+
+          <!-- Dates -->
+          <p class="text-gray-300 mt-1">
+            <span class="font-semibold text-white">Duration:</span>
+            {{ item.start_date }} –
+            <span *ngIf="item.end_date; else ongoing">{{ item.end_date }}</span>
+            <ng-template #ongoing>Present</ng-template>
+          </p>
+
+        </div>
+
+      </div>
+
+    </ng-container>
+
+  </div>
+
+</div>

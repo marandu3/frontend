@@ -1,1 +1,90 @@
-<p>contact works!</p>
+<div class="min-h-screen relative flex flex-col items-center justify-center px-6 py-16 overflow-hidden">
+
+  <!-- Animated floating circles -->
+  <div class="absolute w-72 h-72 bg-purple-500/30 rounded-full -top-32 -left-32 animate-pulse-slow blur-3xl"></div>
+  <div class="absolute w-72 h-72 bg-cyan-400/20 rounded-full -bottom-32 -right-32 animate-pulse-slow blur-3xl"></div>
+
+  <!-- Title -->
+  <div class="relative z-10 text-center mb-8">
+    <h1
+      class="text-5xl font-bold mb-3 bg-clip-text"
+      > Get In Touch
+    </h1>
+    <p  class="text-lg max-w-2xl mx-auto">
+      Have questions, suggestions, or want to work together? Drop me a message!
+    </p>
+  </div>
+
+  <!-- Contact Form Card -->
+  <div class="relative z-10 w-full max-w-xl rounded-2xl shadow-2xl transition-all duration-300 transform"
+       >
+    <!-- Header accent -->
+    <div class="h-2 w-full bg-gradient-to-r from-primary-500 to-secondary-500 rounded-t-2xl"></div>
+
+    <div class="p-8">
+      <form [formGroup]="contactForm" (ngSubmit)="sendEmail()" class="flex flex-col space-y-6">
+
+        <div>
+          <label class="block font-medium mb-2 text-white">Your Name</label>
+          <input type="text" formControlName="name" placeholder="Enter your name"
+                 class="w-full px-4 py-2 border rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                 >
+        </div>
+
+        <div>
+          <label class="block font-medium mb-2 text-white">Your Email</label>
+          <input type="email" formControlName="email" placeholder="Enter your email"
+                 class="w-full px-4 py-2 border rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                 >
+        </div>
+
+        <div>
+          <label class="block font-medium mb-2 text-white">Your Message</label>
+          <textarea rows="5" formControlName="message" placeholder="Write your message here..."
+                    class="w-full px-4 py-2 border rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    ></textarea>
+        </div>
+
+        <div class="flex justify-center">
+          <button type="submit"
+                  [disabled]="sending || sent"
+                  
+                  class="relative px-8 py-3 rounded-full bg-blue-600 font-medium overflow-hidden transition-all transform hover:scale-105">
+            <span *ngIf="sending">Sending...</span>
+            <span *ngIf="sent">Message Sent!</span>
+            <span *ngIf="error">Failed to Send. Try Again!</span>
+            <span *ngIf="!sending && !sent && !error">Send Message</span>
+          </button>
+        </div>
+
+      </form>
+
+      <!-- Contact info -->
+      <div class="flex items-center justify-center mt-8 pt-5 border-t border-gray-200 text-gray-700"
+           >
+        <div class="p-2 rounded-full border-2 border-green-700">
+          <i class="pi pi-phone text-lg" style="color: green;"></i>
+        </div>
+        <span class="ml-3 font-medium text-white">+255 757129449</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div *ngIf="showToast" id="toast"
+       class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg text-white shadow-lg transition-all duration-300">
+    {{ toastMessage }}
+  </div>
+
+  <!-- Optional Google Maps iframe -->
+  <!-- <div class="mt-12 w-full max-w-xl h-64 rounded-2xl overflow-hidden shadow-lg">
+    <iframe
+      class="w-full h-full"
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.978218142974!2d39.208550!3d-6.792470!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185c4d2e7e7e9f0f%3A0x29f2c69a9a7cfd0c!2sDar%20es%20Salaam!5e0!3m2!1sen!2stz!4v1684335289789!5m2!1sen!2stz"
+      loading="lazy"
+      allowfullscreen
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div> -->
+
+</div>

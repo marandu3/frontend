@@ -1,13 +1,12 @@
-<div class="min-h-screen flex flex-col bg-gray-900 text-white scroll-smooth ">
+<div class="flex flex-col min-h-screen bg-gray-900 text-white scroll-smooth">
 
   <!-- Navbar -->
   <app-navbar class="fixed top-0 left-0 w-full z-50"></app-navbar>
 
-  <!-- Sections -->
+  <!-- Main content -->
   <main class="flex-grow">
-
     <!-- Home Section -->
-    <section id="home" class="min-h-screen bg-[linear-gradient(to_left,rgb(46,42,52),rgb(55,75,85),rgb(44,61,45),rgb(57,38,38),rgb(74,44,70))] flex flex-col items-center justify-start  w-full">
+    <section id="home" class="min-h-screen bg-[linear-gradient(to_left,rgb(46,42,52),rgb(55,75,85),rgb(44,61,45),rgb(57,38,38),rgb(74,44,70))] flex flex-col items-center justify-start w-full">
       <app-homepage></app-homepage>
     </section>
 
@@ -16,20 +15,34 @@
       <app-about></app-about>
     </section>
 
+    <!-- Education Section -->
+    <section id="education" class="min-h-screen flex flex-col items-center pt-32 w-full">
+      <app-education></app-education>
+    </section>
+
     <!-- Projects Section -->
-    <section id="projects" class="min-h-screen flex items-center justify-center">
+    <section id="projects" class="min-h-screen flex items-center justify-center w-full">
       <app-project></app-project>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="min-h-screen flex flex-col items-center justify-center">
-      <app-contact></app-contact>
-
-      <!-- Footer -->
-      <footer class="mt-10 p-4 text-center text-sm text-gray-400">
-        &copy; 2025 Marandu3. All rights reserved.
-      </footer>
+    <!-- Timeline Section -->
+    <section id="timeline" class="min-h-screen flex flex-col items-center pt-32 w-full">
+      <app-timeline></app-timeline>
     </section>
 
+    <!-- Contact Section -->
+    <section id="contact" class="min-h-screen flex flex-col items-center justify-center w-full">
+      <app-contact></app-contact>
+    </section>
   </main>
+
+  <!-- Footer -->
+  <footer class="w-full bg-gray-800 text-gray-400 p-4 text-center relative flex justify-center items-center">
+    <span>&copy; 2025 
+      <a routerLink="/hidden-portfolio" class="text-blue-400 hover:text-blue-500 transition-colors duration-300">
+        Marandu3
+      </a>. All rights reserved.
+    </span>
+  </footer>
+
 </div>
