@@ -8,6 +8,7 @@ interface SocialMedia {
   iconUrl?: string; // optional, can be fetched from a default mapping
 }
 
+
 @Component({
   selector: 'app-homepage',
   standalone: true,
@@ -21,13 +22,15 @@ export class Homepage implements OnInit {
   loading = true;
 
   // Default icon mapping for known platforms
+  // Default icon mapping for known platforms
+  // Icons are placed in the project's `public/` folder and will be served from the app root at runtime.
+  // Use absolute root paths so the browser requests the correct files (e.g. '/linkedin.png').
   defaultIcons: Record<string, string> = {
-    linkedin: 'assets/icons/linkedin.png',
-    github: 'assets/icons/github.png',
-    whatsapp: 'assets/icons/whatsapp.png',
-    email: 'assets/icons/email.png',
+    linkedin: '/linkedin.png',
+    github: '/github.png',
+    whatsapp: '/whatsapp.png',
+    email: '/gmail.png',
   };
-
   constructor(private portfolioService: PortfolioService) {}
 
   ngOnInit(): void {
@@ -51,7 +54,7 @@ export class Homepage implements OnInit {
             ? Object.entries(prof.social_links).map(([key, value]) => ({
                 name: key,
                 url: value as string,
-                iconUrl: this.defaultIcons[key.toLowerCase()] || 'assets/icons/default.png',
+                iconUrl: this.defaultIcons[key.toLowerCase()] || '/github.png',
               }))
             : [];
         }

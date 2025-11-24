@@ -5,35 +5,7 @@
 
   <!-- Main content -->
   <main class="flex-grow">
-    <!-- Home Section -->
-    <section id="home" class="min-h-screen bg-[linear-gradient(to_left,rgb(46,42,52),rgb(55,75,85),rgb(44,61,45),rgb(57,38,38),rgb(74,44,70))] flex flex-col items-center justify-start w-full">
-      <app-homepage></app-homepage>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="min-h-screen flex flex-col items-center pt-32 w-full">
-      <app-about></app-about>
-    </section>
-
-    <!-- Education Section -->
-    <section id="education" class="min-h-screen flex flex-col items-center pt-32 w-full">
-      <app-education></app-education>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="min-h-screen flex items-center justify-center w-full">
-      <app-project></app-project>
-    </section>
-
-    <!-- Timeline Section -->
-    <section id="timeline" class="min-h-screen flex flex-col items-center pt-32 w-full">
-      <app-timeline></app-timeline>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="min-h-screen flex flex-col items-center justify-center w-full">
-      <app-contact></app-contact>
-    </section>
+    <router-outlet></router-outlet>
   </main>
 
   <!-- Footer -->
