@@ -13,7 +13,6 @@ import { CommonModule } from '@angular/common';
 export class ProfileComponent implements OnInit {
 
   profileForm!: FormGroup;
-  loading = true;
   previewImage: string | null = null;
 
   constructor(
@@ -46,22 +45,12 @@ export class ProfileComponent implements OnInit {
           this.profileForm.patchValue(p);
           this.previewImage = p.profile_image_url || null;
         }
-        this.loading = false;
-      },
-      error: () => this.loading = false
+      }
     });
   }
 
-  onImageSelected(event: any) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.previewImage = reader.result as string;
-      this.profileForm.patchValue({ profile_image_url: this.previewImage });
-    };
-    reader.readAsDataURL(file);
+  onImageLinkChange() {
+    this.previewImage = this.profileForm.value.profile_image_url;
   }
 
   saveProfile() {

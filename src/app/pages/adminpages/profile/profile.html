@@ -1,12 +1,10 @@
 <div class="min-h-screen p-6 bg-gray-900 text-white">
-
   <h1 class="text-3xl font-bold mb-6">Manage Profile</h1>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-    <!-- FORM SECTION -->
+    <!-- FORM -->
     <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
-
       <form [formGroup]="profileForm" class="space-y-5">
 
         <!-- NAME -->
@@ -30,27 +28,21 @@
             class="w-full mt-1 p-2 rounded bg-gray-700 focus:ring-2 focus:ring-purple-400"></textarea>
         </div>
 
+        <!-- IMAGE LINK -->
+        <div>
+          <label class="text-sm font-semibold">Profile Image URL</label>
+          <input type="text" formControlName="profile_image_url"
+            (input)="onImageLinkChange()"
+            class="w-full mt-1 p-2 rounded bg-gray-700">
+        </div>
+
         <!-- SOCIAL LINKS -->
         <div formGroupName="social_links" class="space-y-3">
           <label class="text-sm font-semibold block">Social Links</label>
-
-          <input placeholder="GitHub URL" formControlName="github"
-            class="w-full p-2 rounded bg-gray-700">
-
-          <input placeholder="LinkedIn URL" formControlName="linkedin"
-            class="w-full p-2 rounded bg-gray-700">
-
-          <input placeholder="Twitter URL" formControlName="twitter"
-            class="w-full p-2 rounded bg-gray-700">
-
-          <input placeholder="Email" formControlName="email"
-            class="w-full p-2 rounded bg-gray-700">
-        </div>
-
-        <!-- IMAGE UPLOAD -->
-        <div>
-          <label class="text-sm font-semibold block mb-1">Profile Image</label>
-          <input type="file" (change)="onImageSelected($event)" class="text-sm">
+          <input placeholder="GitHub URL" formControlName="github" class="w-full p-2 rounded bg-gray-700">
+          <input placeholder="LinkedIn URL" formControlName="linkedin" class="w-full p-2 rounded bg-gray-700">
+          <input placeholder="Twitter URL" formControlName="twitter" class="w-full p-2 rounded bg-gray-700">
+          <input placeholder="Email" formControlName="email" class="w-full p-2 rounded bg-gray-700">
         </div>
 
         <!-- SAVE BUTTON -->
@@ -62,7 +54,7 @@
       </form>
     </div>
 
-    <!-- PREVIEW SECTION -->
+    <!-- PREVIEW -->
     <div class="bg-gray-800 p-6 rounded-xl shadow-lg flex flex-col items-center text-center">
 
       <h2 class="text-xl font-bold mb-4">Live Preview</h2>
@@ -73,7 +65,6 @@
 
       <p class="text-2xl font-bold">{{ profileForm.value.name }}</p>
       <p class="text-purple-300">{{ profileForm.value.title }}</p>
-
       <p class="mt-4 text-gray-300">{{ profileForm.value.description }}</p>
 
       <div class="mt-6 space-y-1 text-gray-400">

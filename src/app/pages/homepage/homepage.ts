@@ -5,9 +5,8 @@ import { CommonModule } from '@angular/common';
 interface SocialMedia {
   name: string;
   url: string;
-  iconUrl?: string; // optional, can be fetched from a default mapping
+  iconUrl: string;
 }
-
 
 @Component({
   selector: 'app-homepage',
@@ -19,18 +18,14 @@ export class Homepage implements OnInit {
   profile: Profile | null = null;
   socialMedia: SocialMedia[] = [];
   photoModalVisible = false;
-  loading = true;
 
-  // Default icon mapping for known platforms
-  // Default icon mapping for known platforms
-  // Icons are placed in the project's `public/` folder and will be served from the app root at runtime.
-  // Use absolute root paths so the browser requests the correct files (e.g. '/linkedin.png').
   defaultIcons: Record<string, string> = {
-    linkedin: '/linkedin.png',
     github: '/github.png',
-    whatsapp: '/whatsapp.png',
-    email: '/gmail.png',
+    linkedin: '/linkedin.png',
+    twitter: '/twitter.png',
+    email: '/gmail.png'
   };
+
   constructor(private portfolioService: PortfolioService) {}
 
   ngOnInit(): void {
@@ -38,33 +33,22 @@ export class Homepage implements OnInit {
   }
 
   loadProfile() {
-    this.loading = true;
     this.portfolioService.getProfile().subscribe({
       next: (data) => {
-        if (data && data.length > 0) {
-          const prof = data[0];
-          this.profile = {
-            ...prof,
-            // fallback fields if needed
-            description: prof.description || '',
-          };
+        if (!data || data.length === 0) return;
 
-          // Convert social_links dict to array
-          this.socialMedia = prof.social_links
-            ? Object.entries(prof.social_links).map(([key, value]) => ({
-                name: key,
-                url: value as string,
-                iconUrl: this.defaultIcons[key.toLowerCase()] || '/github.png',
-              }))
-            : [];
-        }
-        this.loading = false;
-      },
-      error: () => {
-        this.profile = null;
-        this.socialMedia = [];
-        this.loading = false;
-      },
+        const prof = data[0];
+        this.profile = prof;
+
+        // ONLY SHOW SOCIALS WITH VALUES
+        this.socialMedia = Object.entries(prof.social_links || {})
+          .filter(([_, value]) => value && value !== '')
+          .map(([key, value]) => ({
+            name: key,
+            url: value as string,
+            iconUrl: this.defaultIcons[key.toLowerCase()] || '/github.png'
+          }));
+      }
     });
   }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PortfolioService } from '../../services/portfolio.service';
+import { PortfolioService, Skill } from '../../services/portfolio.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -7,11 +7,11 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './about.html',
-  styleUrl: './about.css'
+  styleUrls: ['./about.css']
 })
 export class About implements OnInit {
 
-  groupedSkills: any = {};
+  groupedSkills: Record<string, Skill[]> = {};
   loading = true;
 
   constructor(private portfolioService: PortfolioService) {}
@@ -35,12 +35,11 @@ export class About implements OnInit {
     });
   }
 
-  groupSkillsByCategory(skills: any[]) {
-    this.groupedSkills = skills.reduce((acc, skill) => {
-      if (!acc[skill.category]) {
-        acc[skill.category] = [];
-      }
-      acc[skill.category].push(skill);
+  private groupSkillsByCategory(skills: Skill[]) {
+    this.groupedSkills = skills.reduce((acc: Record<string, Skill[]>, skill) => {
+      const category = skill.category || 'Uncategorized';
+      if (!acc[category]) acc[category] = [];
+      acc[category].push(skill);
       return acc;
     }, {});
   }
