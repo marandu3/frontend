@@ -6,6 +6,7 @@ import { Project } from './pages/project/project';
 import { Education } from './pages/education/education';
 import { Timeline } from './pages/timeline/timeline';
 import { Layout } from './pages/layout/layout';
+import { Admindashboard } from './pages/adminpages/admindashboard/admindashboard';
 
 export const routes: Routes = [
     {
@@ -35,6 +36,10 @@ export const routes: Routes = [
     {
         path: 'timeline',
         component: Timeline
+    },
+    {
+        path: 'admindashboard',
+        component: Admindashboard
     },
     {
         path: '**',

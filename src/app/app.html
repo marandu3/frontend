@@ -1,7 +1,16 @@
 <div class="flex flex-col min-h-screen bg-gray-900 text-white scroll-smooth">
 
   <!-- Navbar -->
-  <app-navbar class="fixed top-0 left-0 w-full z-50"></app-navbar>
+  <ng-container *ngIf="!admin">
+    <app-navbar class="fixed top-0 left-0 w-full z-50"></app-navbar>
+  </ng-container>
+
+  <ng-container *ngIf="admin">
+    <app-admin-navbar 
+        class="fixed top-0 left-0 w-full z-50"
+        (backToPublicEvent)="disableAdmin()">
+    </app-admin-navbar>
+  </ng-container>
 
   <!-- Main content -->
   <main class="flex-grow">
@@ -9,9 +18,9 @@
   </main>
 
   <!-- Footer -->
-  <footer class="w-full bg-gray-800 text-gray-400 p-4 text-center relative flex justify-center items-center">
+  <footer class="w-full bg-gray-800 text-gray-400 p-4 text-center">
     <span>&copy; 2025 
-      <a routerLink="/hidden-portfolio" class="text-blue-400 hover:text-blue-500 transition-colors duration-300">
+      <a (click)="enableAdmin()" class="text-blue-400 hover:text-blue-500 cursor-pointer">
         Marandu3
       </a>. All rights reserved.
     </span>
