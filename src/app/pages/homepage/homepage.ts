@@ -1,6 +1,7 @@
+
 import { Component, OnInit } from '@angular/core';
 import { PortfolioService, Profile } from '../../services/portfolio.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgForOf, NgIf } from '@angular/common';
 
 interface SocialMedia {
   name: string;
@@ -11,7 +12,7 @@ interface SocialMedia {
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgForOf, NgIf],
   templateUrl: './homepage.html',
 })
 export class Homepage implements OnInit {
