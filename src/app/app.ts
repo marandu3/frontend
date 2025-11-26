@@ -1,5 +1,5 @@
-import { Component, signal, effect } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { Navbar } from './components/navbar/navbar';
 import { AdminNavbar } from './components/admin-navbar/admin-navbar';
 import { CommonModule } from '@angular/common';
@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [Navbar, CommonModule, RouterOutlet, RouterLink, AdminNavbar],
+  imports: [Navbar, CommonModule, RouterOutlet, AdminNavbar],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
