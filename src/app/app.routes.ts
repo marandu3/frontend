@@ -8,7 +8,6 @@ import { Timeline } from './pages/timeline/timeline';
 import { Layout } from './pages/layout/layout';
 import { Admindashboard } from './pages/adminpages/admindashboard/admindashboard';
 import { Cprojects } from './pages/adminpages/cprojects/cprojects';
-import { Cskills } from './pages/adminpages/cskills/cskills';
 import { Ctimeline } from './pages/adminpages/ctimeline/ctimeline';
 import { Ceducation } from './pages/adminpages/ceducation/ceducation';
 import { Cabout } from './pages/adminpages/cabout/cabout';
@@ -50,10 +49,6 @@ export const routes: Routes = [
     {
         path: 'createprojects',
         component:Cprojects
-    },
-    {
-        path: 'createskills',
-        component:Cskills
     },
     {
         path:'createabout',
