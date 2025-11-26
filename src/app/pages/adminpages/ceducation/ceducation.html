@@ -1,1 +1,163 @@
-<p>ceducation works!</p>
+<div class="max-w-4xl mx-auto mt-20 text-white">
+
+  <!-- Mini Nav -->
+  <div class="flex gap-4 mb-6">
+    <button
+      (click)="switchMode('add')"
+      [class.bg-purple-600]="mode === 'add'"
+      class="px-4 py-2 rounded-lg bg-gray-700 hover:bg-purple-700">
+      Add
+    </button>
+
+    <button
+      (click)="switchMode('edit')"
+      [class.bg-purple-600]="mode === 'edit'"
+      class="px-4 py-2 rounded-lg bg-gray-700 hover:bg-purple-700">
+      Edit
+    </button>
+
+    <button
+      (click)="switchMode('delete')"
+      [class.bg-purple-600]="mode === 'delete'"
+      class="px-4 py-2 rounded-lg bg-gray-700 hover:bg-purple-700">
+      Delete
+    </button>
+  </div>
+
+  <!-- ADD MODE -->
+  <div *ngIf="mode === 'add'" class="bg-gray-900 p-6 rounded-2xl border border-gray-700">
+
+    <form [formGroup]="educationForm" (ngSubmit)="create()">
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <input formControlName="level" placeholder="Level"
+               class="w-full p-2 rounded-lg bg-gray-800 text-white border border-gray-600
+                      focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none" />
+
+        <input formControlName="institution" placeholder="Institution"
+               class="w-full p-2 rounded-lg bg-gray-800 text-white border border-gray-600
+                      focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none" />
+
+        <input formControlName="field_of_study" placeholder="Field of Study"
+               class="w-full p-2 rounded-lg bg-gray-800 text-white border border-gray-600
+                      focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none" />
+
+        <input formControlName="location" placeholder="Location"
+               class="w-full p-2 rounded-lg bg-gray-800 text-white border border-gray-600
+                      focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none" />
+
+        <input type="number" formControlName="start_year" placeholder="Start Year"
+               class="w-full p-2 rounded-lg bg-gray-800 text-white border border-gray-600
+                      focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none" />
+
+        <input type="number" formControlName="end_year" placeholder="End Year"
+               class="w-full p-2 rounded-lg bg-gray-800 text-white border border-gray-600
+                      focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none" />
+
+      </div>
+
+      <button type="submit"
+              class="w-full bg-purple-600 mt-4 py-2 rounded-lg font-bold hover:bg-purple-700">
+        {{ submitting ? 'Saving...' : 'Save Education' }}
+      </button>
+    </form>
+  </div>
+
+
+  <!-- EDIT MODE -->
+  <div *ngIf="mode === 'edit'" class="mt-6">
+
+    <h2 class="text-xl font-bold mb-4">Select an item to edit</h2>
+
+    <!-- List -->
+    <div *ngFor="let e of educations"
+         (click)="selectForEdit(e)"
+         class="p-4 bg-gray-800 rounded-lg mb-3 cursor-pointer hover:bg-gray-700 border border-gray-600">
+
+      <p class="font-bold">{{ e.level }} — {{ e.institution }}</p>
+      <p class="text-sm text-gray-400">{{ e.field_of_study }} ({{ e.start_year }} - {{ e.end_year }})</p>
+    </div>
+
+    <!-- Edit Form -->
+    <div *ngIf="selectedLevel" class="bg-gray-900 p-6 rounded-2xl border border-gray-700 mt-6">
+
+      <form [formGroup]="educationForm" (ngSubmit)="update()">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          <input formControlName="level" placeholder="Level"
+                 class="w-full p-2 rounded-lg bg-gray-800 text-white border border-gray-600
+                        focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none" />
+
+          <input formControlName="institution" placeholder="Institution"
+                 class="w-full p-2 rounded-lg bg-gray-800 text-white border border-gray-600
+                        focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none" />
+
+          <input formControlName="field_of_study" placeholder="Field of Study"
+                 class="w-full p-2 rounded-lg bg-gray-800 text-white border border-gray-600
+                        focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none" />
+
+          <input formControlName="location" placeholder="Location"
+                 class="w-full p-2 rounded-lg bg-gray-800 text-white border border-gray-600
+                        focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none" />
+
+          <input type="number" formControlName="start_year" placeholder="Start Year"
+                 class="w-full p-2 rounded-lg bg-gray-800 text-white border border-gray-600
+                        focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none" />
+
+          <input type="number" formControlName="end_year" placeholder="End Year"
+                 class="w-full p-2 rounded-lg bg-gray-800 text-white border border-gray-600
+                        focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none" />
+
+        </div>
+
+        <button type="submit"
+                class="w-full bg-purple-600 mt-4 py-2 rounded-lg font-bold hover:bg-purple-700">
+          {{ submitting ? 'Updating...' : 'Update Education' }}
+        </button>
+
+      </form>
+    </div>
+
+  </div>
+
+
+  <!-- DELETE MODE -->
+  <div *ngIf="mode === 'delete'" class="mt-6">
+
+    <h2 class="text-xl font-bold mb-4">Select an item to delete</h2>
+
+    <div *ngFor="let e of educations"
+         (click)="askDelete(e)"
+         class="p-4 bg-red-900/40 border border-red-700 rounded-lg mb-3 cursor-pointer hover:bg-red-800">
+
+      <p class="font-bold">{{ e.level }} — {{ e.institution }}</p>
+      <p class="text-sm text-gray-300">{{ e.field_of_study }}</p>
+    </div>
+
+    <!-- Confirm Box -->
+    <div *ngIf="confirmDelete" class="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+      <div class="bg-gray-900 p-6 rounded-xl w-80 border border-gray-700">
+        <p class="text-lg font-bold mb-4">Are you sure?</p>
+
+        <p class="text-gray-300">
+          Delete <strong>{{ toDelete?.level }}</strong> at
+          <strong>{{ toDelete?.institution }}</strong>?
+        </p>
+
+        <div class="flex gap-4 mt-6">
+          <button (click)="cancelDelete()" class="flex-1 py-2 rounded-lg bg-gray-700 hover:bg-gray-600">
+            Cancel
+          </button>
+
+          <button (click)="confirmDeleteAction()" class="flex-1 py-2 rounded-lg bg-red-600 hover:bg-red-700">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
