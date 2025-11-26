@@ -2,7 +2,9 @@
 
   <!-- Title -->
   <p class="text-5xl font-bold text-center text-white">
-    About <span class="bg-[linear-gradient(to_right,rgb(163,0,163),rgb(0,221,255),rgb(167,249,45),rgb(238,238,2))] text-transparent bg-clip-text">
+    About 
+    <span class="bg-[linear-gradient(to_right,rgb(163,0,163),rgb(0,221,255),rgb(167,249,45),rgb(238,238,2))] 
+      text-transparent bg-clip-text">
       Me
     </span>
   </p>
@@ -11,47 +13,139 @@
     I'm a dedicated Computer Engineering student with passion for innovation, problem-solving, and building technology that matters.
   </p>
 
-  <!-- Add Skill Form -->
-  <div class="mt-10 max-w-xl mx-auto bg-gray-900 p-6 rounded-2xl border border-gray-700">
+  <!-- MODE SWITCH BUTTONS -->
+  <div class="flex gap-4 justify-center mt-10">
+    <button (click)="switchMode('add')"
+            [class.bg-purple-700]="mode === 'add'"
+            class="px-6 py-2 bg-gray-800 rounded-lg text-white">
+      Add Skill
+    </button>
+
+    <button (click)="switchMode('edit')"
+            [class.bg-purple-700]="mode === 'edit'"
+            class="px-6 py-2 bg-gray-800 rounded-lg text-white">
+      Edit Skill
+    </button>
+
+    <button (click)="switchMode('delete')"
+            [class.bg-purple-700]="mode === 'delete'"
+            class="px-6 py-2 bg-gray-800 rounded-lg text-white">
+      Delete Skill
+    </button>
+  </div>
+
+
+  <!-- ============================================================ -->
+  <!-- ADD MODE -->
+  <!-- ============================================================ -->
+  <div *ngIf="mode === 'add'" 
+       class="mt-10 max-w-xl mx-auto bg-gray-900 p-6 rounded-2xl border border-gray-700">
     <h2 class="text-2xl font-bold text-white mb-4">Add a New Skill</h2>
 
     <form [formGroup]="skillForm" (ngSubmit)="submitSkill()">
 
-      <input 
-        formControlName="name" 
-        placeholder="Skill Name" 
-        class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" 
-      />
+      <input formControlName="name" placeholder="Skill Name"
+             class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" />
 
-      <input 
-        formControlName="icon_url" 
-        placeholder="Icon URL" 
-        class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" 
-      />
+      <input formControlName="icon_url" placeholder="Icon URL"
+             class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" />
 
-      <input 
-        formControlName="description" 
-        placeholder="Description" 
-        class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" 
-      />
+      <input formControlName="description" placeholder="Description"
+             class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" />
 
-      <select 
-        formControlName="category" 
-        class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600"
-      >
+      <select formControlName="category"
+              class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600">
         <option value="" disabled>Select Category</option>
-        <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+        <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
       </select>
 
-      <button 
-        type="submit" 
-        [disabled]="submitting" 
-        class="w-full bg-purple-600 hover:bg-purple-700 p-2 rounded-lg text-white font-bold"
-      >
+      <button type="submit" [disabled]="submitting"
+              class="w-full bg-purple-600 hover:bg-purple-700 p-2 rounded-lg text-white font-bold">
         {{ submitting ? 'Adding...' : 'Add Skill' }}
       </button>
 
     </form>
+  </div>
+
+
+  <!-- ============================================================ -->
+  <!-- EDIT MODE -->
+  <!-- ============================================================ -->
+  <div *ngIf="mode === 'edit'" class="mt-10">
+
+    <h2 class="text-2xl font-bold text-white mb-4 text-center">Select Skill to Edit</h2>
+
+    <div *ngFor="let s of skills"
+         (click)="selectSkillToEdit(s)"
+         class="p-4 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded-lg mb-3 cursor-pointer">
+      <p class="font-bold">{{ s.name }}</p>
+      <p class="text-gray-300 text-sm">{{ s.category }}</p>
+    </div>
+
+    <div *ngIf="editSkill"
+         class="mt-10 max-w-xl mx-auto bg-gray-900 p-6 rounded-2xl border border-gray-700">
+
+      <h2 class="text-xl font-bold text-white mb-4">Editing: {{ editSkill.name }}</h2>
+
+      <form [formGroup]="skillForm" (ngSubmit)="updateSkill()">
+
+        <input formControlName="name" placeholder="Skill Name"
+               class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" />
+
+        <input formControlName="icon_url" placeholder="Icon URL"
+               class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" />
+
+        <input formControlName="description" placeholder="Description"
+               class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" />
+
+        <select formControlName="category"
+                class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600">
+          <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+        </select>
+
+        <button type="submit"
+                class="w-full bg-purple-600 hover:bg-purple-700 p-2 rounded-lg text-white font-bold">
+          {{ submitting ? 'Updating...' : 'Update Skill' }}
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- ============================================================ -->
+  <!-- DELETE MODE -->
+  <!-- ============================================================ -->
+  <div *ngIf="mode === 'delete'" class="mt-10">
+
+    <h2 class="text-2xl font-bold text-red-400 mb-4 text-center">Select Skill to Delete</h2>
+
+    <div *ngFor="let s of skills"
+         (click)="askDelete(s)"
+         class="p-4 bg-red-900/30 hover:bg-red-900/50 border border-red-700 rounded-lg mb-3 cursor-pointer">
+      <p class="font-bold">{{ s.name }}</p>
+      <p class="text-gray-300 text-sm">{{ s.category }}</p>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div *ngIf="confirmDelete"
+         class="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+      <div class="bg-gray-900 p-6 rounded-xl w-80 border border-gray-700">
+        <p class="text-lg font-bold mb-4">Confirm Deletion</p>
+        <p class="text-gray-300 mb-4">
+          Delete <strong>{{ toDelete?.name }}</strong>?
+        </p>
+        <div class="flex gap-4">
+          <button (click)="cancelDelete()" class="flex-1 py-2 bg-gray-700 rounded-lg">Cancel</button>
+          <button (click)="confirmDeleteAction()" class="flex-1 py-2 bg-red-600 rounded-lg">
+            {{ submitting ? 'Deleting...' : 'Delete' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </div>

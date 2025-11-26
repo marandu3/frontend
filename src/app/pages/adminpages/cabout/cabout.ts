@@ -1,24 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PortfolioService, Skill } from '../../../services/portfolio.service';
 
 @Component({
   selector: 'app-cabout',
-  templateUrl: './cabout.html',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './cabout.html',
   styleUrls: ['./cabout.css']
 })
 export class Cabout implements OnInit {
 
   skills: Skill[] = [];
-  groupedSkills: { [category: string]: Skill[] } = {};
-  loading = true;
+  mode: 'add' | 'edit' | 'delete' = 'add';
 
-  skillForm: FormGroup;
+  skillForm!: FormGroup;
   submitting = false;
 
-  // Predefined categories for the dropdown
+  editSkill: Skill | null = null;       // Selected skill to edit
+  confirmDelete = false;                 // Delete modal visibility
+  toDelete: Skill | null = null;         // Selected skill to delete
+
   categories: string[] = [
     'Web Development',
     'AI',
@@ -28,61 +31,109 @@ export class Cabout implements OnInit {
     'IT Concepts'
   ];
 
-  constructor(
-    private portfolioService: PortfolioService,
-    private fb: FormBuilder
-  ) {
+  constructor(private fb: FormBuilder, private portfolio: PortfolioService) {}
+
+  ngOnInit(): void {
     this.skillForm = this.fb.group({
       name: ['', Validators.required],
       icon_url: [''],
       description: [''],
       category: ['', Validators.required]
     });
-  }
 
-  ngOnInit(): void {
     this.loadSkills();
   }
 
-  loadSkills(): void {
-    this.loading = true;
-    this.portfolioService.getSkills().subscribe({
-      next: (data) => {
-        this.skills = data;
-        this.groupByCategory();
-        this.loading = false;
+  switchMode(m: 'add' | 'edit' | 'delete') {
+    this.mode = m;
+    this.editSkill = null;
+    this.confirmDelete = false;
+    this.skillForm.reset();
+  }
+
+  loadSkills() {
+    this.portfolio.getSkills().subscribe({
+      next: res => this.skills = res,
+      error: err => console.error('Failed loading skills', err)
+    });
+  }
+
+  /** ADD SKILL */
+  submitSkill() {
+    if (this.skillForm.invalid) return;
+
+    this.submitting = true;
+    const payload: Skill = this.skillForm.value;
+
+    this.portfolio.createSkill(payload).subscribe({
+      next: skill => {
+        this.skills.push(skill);
+        this.skillForm.reset();
+        this.submitting = false;
       },
-      error: (err) => {
-        console.error('Failed to load skills', err);
-        this.loading = false;
+      error: err => {
+        console.error('Failed to add skill', err);
+        this.submitting = false;
       }
     });
   }
 
-  groupByCategory(): void {
-    this.groupedSkills = {};
-    this.skills.forEach(skill => {
-      const cat = skill.category || 'Uncategorized';
-      if (!this.groupedSkills[cat]) this.groupedSkills[cat] = [];
-      this.groupedSkills[cat].push(skill);
+  /** EDIT */
+  selectSkillToEdit(skill: Skill) {
+    this.editSkill = skill;
+
+    this.skillForm.setValue({
+      name: skill.name,
+      icon_url: skill.icon_url || '',
+      description: skill.description || '',
+      category: skill.category || ''
     });
   }
 
-  submitSkill(): void {
+  updateSkill() {
+    if (!this.editSkill) return;
     if (this.skillForm.invalid) return;
 
     this.submitting = true;
-    const newSkill: Skill = this.skillForm.value;
 
-    this.portfolioService.createSkill(newSkill).subscribe({
-      next: (res) => {
-        this.skills.push(res);
-        this.groupByCategory();
-        this.skillForm.reset();
+    this.portfolio.updateSkill(this.editSkill.name, this.skillForm.value).subscribe({
+      next: () => {
+        this.loadSkills();
+        this.editSkill = null;
         this.submitting = false;
       },
-      error: (err) => {
-        console.error('Failed to add skill', err);
+      error: err => {
+        console.error('Failed to update skill', err);
+        this.submitting = false;
+      }
+    });
+  }
+
+  /** DELETE */
+  askDelete(skill: Skill) {
+    this.toDelete = skill;
+    this.confirmDelete = true;
+  }
+
+  cancelDelete() {
+    this.toDelete = null;
+    this.confirmDelete = false;
+  }
+
+  confirmDeleteAction() {
+    if (!this.toDelete) return;
+
+    this.submitting = true;
+
+    this.portfolio.deleteSkill(this.toDelete.name).subscribe({
+      next: () => {
+        this.confirmDelete = false;
+        this.submitting = false;
+        this.toDelete = null;
+        this.loadSkills();
+      },
+      error: err => {
+        console.error('Failed to delete skill', err);
         this.submitting = false;
       }
     });
