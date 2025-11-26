@@ -1,1 +1,149 @@
-<p>cprojects works!</p>
+<div class="max-w-4xl mx-auto mt-20 text-white">
+
+  <!-- Mini Nav -->
+  <div class="flex gap-4 mb-6">
+    <button
+      (click)="switchMode('add')"
+      class="px-4 py-2 rounded-lg bg-gray-700 hover:bg-purple-700"
+      [class.bg-purple-600]="mode === 'add'">
+      Add
+    </button>
+
+    <button
+      (click)="switchMode('edit')"
+      class="px-4 py-2 rounded-lg bg-gray-700 hover:bg-purple-700"
+      [class.bg-purple-600]="mode === 'edit'">
+      Edit
+    </button>
+
+    <button
+      (click)="switchMode('delete')"
+      class="px-4 py-2 rounded-lg bg-gray-700 hover:bg-purple-700"
+      [class.bg-purple-600]="mode === 'delete'">
+      Delete
+    </button>
+  </div>
+
+
+  <!-- ================= ADD PROJECT ================= -->
+  <div *ngIf="mode === 'add'" class="bg-gray-900 p-6 rounded-2xl border border-gray-700">
+
+    <form [formGroup]="projectForm" (ngSubmit)="create()">
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <input formControlName="title" placeholder="Title"
+               class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
+
+        <input formControlName="picture_url" placeholder="Picture URL"
+               class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
+
+        <input formControlName="github_url" placeholder="GitHub URL"
+               class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
+
+        <input formControlName="live_url" placeholder="Live URL"
+               class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
+
+        <input type="date" formControlName="start_date"
+               class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
+
+        <input type="date" formControlName="end_date"
+               class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
+
+      </div>
+
+      <textarea formControlName="description" placeholder="Description"
+                class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg mt-4 h-28"></textarea>
+
+      <input formControlName="technologies" placeholder="Technologies (comma separated)"
+             class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg mt-4" />
+
+      <button type="submit"
+              class="w-full mt-4 bg-purple-600 hover:bg-purple-700 p-2 rounded-lg font-bold">
+        {{ submitting ? 'Saving...' : 'Save Project' }}
+      </button>
+    </form>
+  </div>
+
+
+
+  <!-- ================= EDIT PROJECT ================= -->
+  <div *ngIf="mode === 'edit'" class="mt-6">
+
+    <h2 class="text-xl font-bold mb-4">Choose a project to edit</h2>
+
+    <div *ngFor="let p of projects"
+         (click)="selectForEdit(p)"
+         class="p-4 bg-gray-800 rounded-lg border border-gray-600 mb-3 cursor-pointer hover:bg-gray-700">
+      <p class="font-bold">{{ p.title }}</p>
+      <p class="text-sm text-gray-400">{{ p.start_date }} - {{ p.end_date }}</p>
+    </div>
+
+    <!-- Edit Form -->
+    <div *ngIf="selectedTitle"
+         class="bg-gray-900 p-6 rounded-2xl border border-gray-700 mt-6">
+
+      <form [formGroup]="projectForm" (ngSubmit)="update()">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          <input formControlName="title" class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
+          <input formControlName="picture_url" class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
+          <input formControlName="github_url" class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
+          <input formControlName="live_url" class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
+          <input type="date" formControlName="start_date" class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
+          <input type="date" formControlName="end_date" class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
+
+        </div>
+
+        <textarea formControlName="description"
+                  class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg mt-4 h-28"></textarea>
+
+        <input formControlName="technologies"
+               class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg mt-4" />
+
+        <button type="submit"
+                class="w-full mt-4 bg-purple-600 hover:bg-purple-700 p-2 rounded-lg font-bold">
+          {{ submitting ? 'Updating...' : 'Update Project' }}
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+
+
+  <!-- ================= DELETE PROJECT ================= -->
+  <div *ngIf="mode === 'delete'" class="mt-6">
+
+    <h2 class="text-xl font-bold mb-4">Choose a project to delete</h2>
+
+    <div *ngFor="let p of projects"
+         (click)="askDelete(p)"
+         class="p-4 bg-red-900/40 border border-red-700 rounded-lg mb-3 cursor-pointer hover:bg-red-800">
+      <p class="font-bold">{{ p.title }}</p>
+      <p class="text-sm text-gray-300">{{ p.description | slice:0:50 }}...</p>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div *ngIf="confirmDelete"
+         class="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+
+      <div class="bg-gray-900 p-6 rounded-xl w-80 border border-gray-700">
+
+        <p class="text-lg font-bold mb-4">Are you sure?</p>
+
+        <p class="text-gray-300">
+          Delete <strong>{{ toDelete?.title }}</strong>?
+        </p>
+
+        <div class="flex gap-4 mt-6">
+          <button (click)="cancelDelete()" class="flex-1 py-2 bg-gray-700 rounded-lg">Cancel</button>
+          <button (click)="confirmDeleteAction()" class="flex-1 py-2 bg-red-600 rounded-lg">Delete</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
