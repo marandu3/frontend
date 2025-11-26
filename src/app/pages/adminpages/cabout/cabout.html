@@ -14,67 +14,44 @@
   <!-- Add Skill Form -->
   <div class="mt-10 max-w-xl mx-auto bg-gray-900 p-6 rounded-2xl border border-gray-700">
     <h2 class="text-2xl font-bold text-white mb-4">Add a New Skill</h2>
+
     <form [formGroup]="skillForm" (ngSubmit)="submitSkill()">
 
-      <input formControlName="name" placeholder="Skill Name" class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" />
+      <input 
+        formControlName="name" 
+        placeholder="Skill Name" 
+        class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" 
+      />
 
-      <input formControlName="icon_url" placeholder="Icon URL" class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" />
+      <input 
+        formControlName="icon_url" 
+        placeholder="Icon URL" 
+        class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" 
+      />
 
-      <input formControlName="description" placeholder="Description" class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" />
+      <input 
+        formControlName="description" 
+        placeholder="Description" 
+        class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" 
+      />
 
-      <select formControlName="category" class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600">
+      <select 
+        formControlName="category" 
+        class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600"
+      >
         <option value="" disabled>Select Category</option>
         <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
       </select>
 
-      <button type="submit" [disabled]="submitting" class="w-full bg-purple-600 hover:bg-purple-700 p-2 rounded-lg text-white font-bold">
+      <button 
+        type="submit" 
+        [disabled]="submitting" 
+        class="w-full bg-purple-600 hover:bg-purple-700 p-2 rounded-lg text-white font-bold"
+      >
         {{ submitting ? 'Adding...' : 'Add Skill' }}
       </button>
+
     </form>
   </div>
 
-  <!-- Skills Section -->
-  <div class="mt-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
-
-    <!-- Skeleton loaders -->
-    <ng-container *ngIf="loading">
-      <div class="h-48 bg-gray-800 rounded-xl animate-pulse"></div>
-      <div class="h-48 bg-gray-800 rounded-xl animate-pulse"></div>
-      <div class="h-48 bg-gray-800 rounded-xl animate-pulse"></div>
-    </ng-container>
-
-    <!-- Category Cards -->
-    <ng-container *ngIf="!loading">
-      <div *ngFor="let category of (groupedSkills | keyvalue)"
-           class="bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-700 hover:border-purple-500 transition-all">
-
-        <!-- Category title -->
-        <p class="text-2xl font-bold text-white mb-4">
-          {{ category.key }}
-        </p>
-
-        <!-- Skills list -->
-        <div class="flex flex-col gap-4">
-          <div *ngFor="let skill of $any(category.value)"
-               class="flex items-center gap-4 p-4 bg-gray-800 rounded-xl hover:bg-gray-700 transition-all">
-
-            <!-- Icon -->
-            <img *ngIf="skill.icon_url"
-                 class="w-12 h-12 rounded-lg object-cover border border-gray-600"
-                 [src]="skill.icon_url"
-                 [alt]="skill.name">
-
-            <!-- Info -->
-            <div class="flex-1">
-              <p class="text-lg font-semibold text-white">{{ skill.name }}</p>
-              <p class="text-gray-400 text-sm">{{ skill.description }}</p>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </ng-container>
-
-  </div>
 </div>
