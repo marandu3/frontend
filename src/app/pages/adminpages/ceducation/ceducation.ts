@@ -129,11 +129,22 @@ export class Ceducation {
   confirmDeleteAction() {
     if (!this.toDelete) return;
 
-    this.portfolio.deleteEducation(this.toDelete.level).subscribe({
+    this.submitting = true;
+    const level = this.toDelete.level;
+    console.log('Attempting to delete education:', level);
+
+    this.portfolio.deleteEducation(level).subscribe({
       next: () => {
+        this.submitting = false;
         this.confirmDelete = false;
         this.toDelete = null;
+        alert('Education deleted successfully');
         this.loadEducations();
+      },
+      error: (err) => {
+        this.submitting = false;
+        console.error('Failed to delete education - Status:', err.status, 'Error:', err);
+        alert('Failed to delete education. Status: ' + err.status + '. Check console for details.');
       }
     });
   }

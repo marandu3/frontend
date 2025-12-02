@@ -147,17 +147,21 @@ export class Cabout implements OnInit {
     if (!this.toDelete) return;
 
     this.submitting = true;
+    const skillName = this.toDelete.name;
+    console.log('Attempting to delete skill:', skillName);
 
-    this.portfolio.deleteSkill(this.toDelete.name).subscribe({
+    this.portfolio.deleteSkill(skillName).subscribe({
       next: () => {
         this.confirmDelete = false;
         this.submitting = false;
         this.toDelete = null;
+        alert('Skill deleted successfully');
         this.loadSkills();
       },
       error: err => {
-        console.error('Failed to delete skill', err);
         this.submitting = false;
+        console.error('Failed to delete skill - Status:', err.status, 'Error:', err);
+        alert('Failed to delete skill. Status: ' + err.status + '. Check console for details.');
       }
     });
   }

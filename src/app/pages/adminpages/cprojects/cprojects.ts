@@ -165,7 +165,10 @@ export class Cprojects implements OnInit {
     if (!this.toDelete) return;
 
     this.submitting = true;
-    this.service.deleteProject(this.toDelete.title).subscribe({
+    const projectTitle = this.toDelete.title;
+    console.log('Attempting to delete project:', projectTitle);
+
+    this.service.deleteProject(projectTitle).subscribe({
       next: () => {
         this.submitting = false;
         this.confirmDelete = false;
@@ -175,8 +178,8 @@ export class Cprojects implements OnInit {
       },
       error: (err) => {
         this.submitting = false;
-        console.error("Delete failed", err);
-        alert('Failed to delete project. Check console for details.');
+        console.error("Delete failed - Status:", err.status, "Error:", err);
+        alert('Failed to delete project. Status: ' + err.status + '. Check console for details.');
       }
     });
   }
