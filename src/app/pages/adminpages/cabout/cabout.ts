@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FallbackImageDirective } from '../../../directives/fallback-image';
 import { PortfolioService, Skill } from '../../../services/portfolio.service';
 
 @Component({
   selector: 'app-cabout',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FallbackImageDirective],
   templateUrl: './cabout.html',
   styleUrls: ['./cabout.css']
 })
@@ -17,6 +18,7 @@ export class Cabout implements OnInit {
 
   skillForm!: FormGroup;
   submitting = false;
+  previewIcon: string | null = null;
 
   editSkill: Skill | null = null;       // Selected skill to edit
   confirmDelete = false;                 // Delete modal visibility
@@ -64,6 +66,11 @@ export class Cabout implements OnInit {
 
     this.submitting = true;
     const payload: Skill = this.skillForm.value;
+    if (payload.icon_url && !this.previewIcon) {
+      alert('Provided skill icon URL appears to be invalid or unreachable. Please check the URL or remove it.');
+      this.submitting = false;
+      return;
+    }
 
     this.portfolio.createSkill(payload).subscribe({
       next: skill => {
@@ -88,6 +95,16 @@ export class Cabout implements OnInit {
       description: skill.description || '',
       category: skill.category || ''
     });
+    this.previewIcon = skill.icon_url || null;
+  }
+
+  onIconInputChange() {
+    const url = this.skillForm.value.icon_url;
+    if (!url) { this.previewIcon = null; return; }
+    const img = new Image();
+    img.onload = () => this.previewIcon = url;
+    img.onerror = () => this.previewIcon = null;
+    img.src = url;
   }
 
   updateSkill() {
@@ -95,6 +112,12 @@ export class Cabout implements OnInit {
     if (this.skillForm.invalid) return;
 
     this.submitting = true;
+    const payload = this.skillForm.value;
+    if (payload.icon_url && !this.previewIcon) {
+      alert('Provided skill icon URL appears to be invalid or unreachable. Please check the URL or remove it.');
+      this.submitting = false;
+      return;
+    }
 
     this.portfolio.updateSkill(this.editSkill.name, this.skillForm.value).subscribe({
       next: () => {

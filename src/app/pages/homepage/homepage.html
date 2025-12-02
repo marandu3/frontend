@@ -6,7 +6,7 @@
     [class.bg-gray-700]="!profile"
     (click)="openPhotoModal()"
   >
-    <img *ngIf="profile?.profile_image_url" [src]="profile?.profile_image_url" class="w-full h-full object-cover" />
+    <img *ngIf="profile?.profile_image_url" [src]="profile?.profile_image_url" class="w-full h-full object-cover" fallbackImage="/profile.jpeg" referrerpolicy="no-referrer" />
     <div *ngIf="!profile" class="w-full h-full bg-gray-700 animate-pulse"></div>
   </div>
 
@@ -35,7 +35,7 @@
     <ng-container *ngIf="socialMedia?.length; else skeletonSocial">
       <ng-container *ngFor="let social of socialMedia">
         <a [href]="social.url" target="_blank" class="transform hover:scale-110 transition">
-          <img [src]="social.iconUrl" class="w-12 h-12 rounded-full" />
+          <img [src]="social.iconUrl" class="w-12 h-12 rounded-full" fallbackImage="/github.png" referrerpolicy="no-referrer" />
         </a>
       </ng-container>
     </ng-container>
@@ -50,7 +50,7 @@
 <!-- MODAL -->
 <div *ngIf="photoModalVisible && profile?.profile_image_url" class="fixed inset-0 bg-black/50 backdrop-blur-md flex flex-col items-center justify-center z-50">
   <div class="relative w-80 h-80 rounded-full overflow-hidden shadow-2xl border-4 border-blue-400 animate-scale-in bg-white/10 backdrop-blur-lg">
-    <img [src]="profile?.profile_image_url" alt="Profile photo" class="w-full h-full object-cover" />
+    <img [src]="profile?.profile_image_url" alt="Profile photo" class="w-full h-full object-cover" fallbackImage="/profile.jpeg" referrerpolicy="no-referrer" />
     <button class="absolute top-2 right-2 bg-white text-black rounded-full px-2 py-1 text-sm font-bold shadow-md" (click)="closePhotoModal()">✕</button>
   </div>
   <button class="mt-6 px-6 py-2 bg-white/20 backdrop-blur-lg hover:bg-white/30 rounded-full text-white font-semibold shadow-lg transition" (click)="closePhotoModal()">Cancel</button>

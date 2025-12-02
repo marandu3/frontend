@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { PortfolioService } from '../../../services/portfolio.service';
 import { CommonModule, SlicePipe } from '@angular/common';
+import { FallbackImageDirective } from '../../../directives/fallback-image';
 
 @Component({
   selector: 'app-cprojects',
   standalone: true,
-  imports: [ReactiveFormsModule,SlicePipe,CommonModule],
+  imports: [ReactiveFormsModule,SlicePipe,CommonModule, FallbackImageDirective],
   templateUrl: './cprojects.html',
   styleUrls: ['./cprojects.css']
 })
@@ -17,6 +18,7 @@ export class Cprojects implements OnInit {
   projects: any[] = [];
 
   projectForm!: FormGroup;
+  previewImage: string | null = null;
 
   selectedTitle: string | null = null; // for editing
 
@@ -42,6 +44,15 @@ export class Cprojects implements OnInit {
       end_date: ['', Validators.required],
       technologies: ['', Validators.required] // comma separated input
     });
+  }
+
+  onPictureUrlChange() {
+    const url = this.projectForm.value.picture_url;
+    if (!url) { this.previewImage = null; return; }
+    const img = new Image();
+    img.onload = () => this.previewImage = url;
+    img.onerror = () => this.previewImage = null;
+    img.src = url;
   }
 
   switchMode(newMode: 'add' | 'edit' | 'delete') {
@@ -71,6 +82,11 @@ export class Cprojects implements OnInit {
     this.submitting = true;
 
     const payload = this.preparePayload();
+    if (payload.picture_url && !this.previewImage) {
+      alert('Provided project picture URL appears to be invalid or unreachable. Please check the URL or remove it.');
+      this.submitting = false;
+      return;
+    }
 
     this.service.createProject(payload).subscribe({
       next: () => {
@@ -110,6 +126,11 @@ export class Cprojects implements OnInit {
     this.submitting = true;
 
     const payload = this.preparePayload();
+    if (payload.picture_url && !this.previewImage) {
+      alert('Provided project picture URL appears to be invalid or unreachable. Please check the URL or remove it.');
+      this.submitting = false;
+      return;
+    }
 
     this.service.updateProject(this.selectedTitle, payload).subscribe({
       next: () => {
