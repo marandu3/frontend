@@ -92,11 +92,13 @@ export class Cprojects implements OnInit {
       next: () => {
         this.submitting = false;
         this.projectForm.reset();
+        alert('Project created successfully');
         this.loadProjects();
       },
       error: (err) => {
         this.submitting = false;
         console.error("Create failed", err);
+        alert('Failed to create project. Check console for details.');
       }
     });
   }
@@ -136,11 +138,13 @@ export class Cprojects implements OnInit {
       next: () => {
         this.submitting = false;
         this.selectedTitle = null;
+        alert('Project updated successfully');
         this.loadProjects();
       },
       error: (err) => {
         this.submitting = false;
         console.error("Update failed", err);
+        alert('Failed to update project. Check console for details.');
       }
     });
   }
@@ -160,13 +164,20 @@ export class Cprojects implements OnInit {
   confirmDeleteAction() {
     if (!this.toDelete) return;
 
+    this.submitting = true;
     this.service.deleteProject(this.toDelete.title).subscribe({
       next: () => {
+        this.submitting = false;
         this.confirmDelete = false;
         this.toDelete = null;
+        alert('Project deleted successfully');
         this.loadProjects();
       },
-      error: (err) => console.error("Delete failed", err)
+      error: (err) => {
+        this.submitting = false;
+        console.error("Delete failed", err);
+        alert('Failed to delete project. Check console for details.');
+      }
     });
   }
 

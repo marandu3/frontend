@@ -147,7 +147,7 @@
 
         <div class="flex gap-4 mt-6">
           <button (click)="cancelDelete()" class="flex-1 py-2 bg-gray-700 rounded-lg">Cancel</button>
-          <button (click)="confirmDeleteAction()" class="flex-1 py-2 bg-red-600 rounded-lg">Delete</button>
+          <button (click)="confirmDeleteAction()" [disabled]="submitting" class="flex-1 py-2 bg-red-600 rounded-lg">{{ submitting ? 'Deleting...' : 'Delete' }}</button>
         </div>
 
       </div>
