@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-techcard',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './techcard.html',
   styleUrl: './techcard.css'
