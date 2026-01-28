@@ -85,10 +85,24 @@ export class Ctimeline implements OnInit {
 
   confirmDeleteAction() {
     if (!this.toDelete) return;
-    this.service.deleteTimelineEvent(this.toDelete.title).subscribe(() => {
-      this.confirmDelete = false;
-      this.toDelete = null;
-      this.loadEvents();
+    
+    this.submitting = true;
+    const title = this.toDelete.title;
+    console.log('Attempting to delete timeline event:', title);
+    
+    this.service.deleteTimelineEvent(title).subscribe({
+      next: () => {
+        this.submitting = false;
+        this.confirmDelete = false;
+        this.toDelete = null;
+        alert('Event deleted successfully');
+        this.loadEvents();
+      },
+      error: (err) => {
+        this.submitting = false;
+        console.error('Failed to delete event - Status:', err.status, 'Error:', err);
+        alert('Failed to delete event. Status: ' + err.status + '. Check console for details.');
+      }
     });
   }
 

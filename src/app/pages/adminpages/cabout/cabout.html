@@ -47,8 +47,13 @@
       <input formControlName="name" placeholder="Skill Name"
              class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" />
 
-      <input formControlName="icon_url" placeholder="Icon URL"
-             class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" />
+            <input formControlName="icon_url" placeholder="Icon URL" (input)="onIconInputChange()"
+              class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" />
+
+            <div *ngIf="previewIcon" class="mb-3">
+              <img [src]="previewIcon" alt="preview" class="w-10 h-10 rounded-full" fallbackImage="/github.png" referrerpolicy="no-referrer" />
+            </div>
+            <p *ngIf="skillForm.value.icon_url && !previewIcon" class="text-sm text-red-400 mt-2">Cannot load icon from URL. Try a direct image link (ends with .png/.svg) or use data URL.</p>
 
       <input formControlName="description" placeholder="Description"
              class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" />
@@ -92,8 +97,13 @@
         <input formControlName="name" placeholder="Skill Name"
                class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" />
 
-        <input formControlName="icon_url" placeholder="Icon URL"
-               class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" />
+         <input formControlName="icon_url" placeholder="Icon URL" (input)="onIconInputChange()"
+           class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" />
+
+        <div *ngIf="previewIcon" class="mb-3">
+          <img [src]="previewIcon" alt="preview" class="w-10 h-10 rounded-full" fallbackImage="/github.png" referrerpolicy="no-referrer" />
+        </div>
+        <p *ngIf="skillForm.value.icon_url && !previewIcon" class="text-sm text-red-400 mt-2">Cannot load icon from URL. Try a direct image link (ends with .png/.svg) or use data URL.</p>
 
         <input formControlName="description" placeholder="Description"
                class="w-full mb-3 p-2 rounded-lg bg-gray-800 text-white border border-gray-600" />
@@ -138,8 +148,8 @@
           Delete <strong>{{ toDelete?.name }}</strong>?
         </p>
         <div class="flex gap-4">
-          <button (click)="cancelDelete()" class="flex-1 py-2 bg-gray-700 rounded-lg">Cancel</button>
-          <button (click)="confirmDeleteAction()" class="flex-1 py-2 bg-red-600 rounded-lg">
+          <button (click)="cancelDelete()" [disabled]="submitting" class="flex-1 py-2 bg-gray-700 rounded-lg hover:bg-gray-600 disabled:opacity-50">Cancel</button>
+          <button (click)="confirmDeleteAction()" [disabled]="submitting" class="flex-1 py-2 bg-red-600 rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed">
             {{ submitting ? 'Deleting...' : 'Delete' }}
           </button>
         </div>

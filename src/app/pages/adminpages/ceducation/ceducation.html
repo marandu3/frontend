@@ -147,12 +147,12 @@
         </p>
 
         <div class="flex gap-4 mt-6">
-          <button (click)="cancelDelete()" class="flex-1 py-2 rounded-lg bg-gray-700 hover:bg-gray-600">
+          <button (click)="cancelDelete()" [disabled]="submitting" class="flex-1 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 disabled:opacity-50">
             Cancel
           </button>
 
-          <button (click)="confirmDeleteAction()" class="flex-1 py-2 rounded-lg bg-red-600 hover:bg-red-700">
-            Delete
+          <button (click)="confirmDeleteAction()" [disabled]="submitting" class="flex-1 py-2 rounded-lg bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed">
+            {{ submitting ? 'Deleting...' : 'Delete' }}
           </button>
         </div>
       </div>

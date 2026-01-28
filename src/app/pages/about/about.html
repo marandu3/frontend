@@ -40,10 +40,12 @@
                class="flex items-center gap-4 p-4 bg-gray-800 rounded-xl hover:bg-gray-700 transition-all">
 
             <!-- Icon -->
-            <img *ngIf="skill.icon_url"
-                 class="w-12 h-12 rounded-lg object-cover border border-gray-600"
-                 [src]="skill.icon_url"
-                 [alt]="skill.name">
+              <img *ngIf="skill.icon_url"
+                class="w-12 h-12 rounded-lg object-cover border border-gray-600"
+                [src]="skill.icon_url"
+                [alt]="skill.name"
+                fallbackImage="/github.png"
+                referrerpolicy="no-referrer">
 
             <!-- Info -->
             <div class="flex-1">

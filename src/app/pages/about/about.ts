@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { PortfolioService, Skill } from '../../services/portfolio.service';
 import { CommonModule } from '@angular/common';
+import { FallbackImageDirective } from '../../directives/fallback-image';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FallbackImageDirective],
   templateUrl: './about.html',
   styleUrls: ['./about.css']
 })

@@ -35,8 +35,12 @@
         <input formControlName="title" placeholder="Title"
                class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
 
-        <input formControlName="picture_url" placeholder="Picture URL"
-               class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
+         <input formControlName="picture_url" placeholder="Picture URL" (input)="onPictureUrlChange()"
+           class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
+        <div *ngIf="previewImage" class="mt-3">
+           <img [src]="previewImage" alt="preview" class="w-32 h-20 object-cover rounded" fallbackImage="/profile.jpeg" referrerpolicy="no-referrer" />
+         </div>
+        <p *ngIf="projectForm.value.picture_url && !previewImage" class="text-sm text-red-400 mt-2">Cannot load image from URL. Try a direct image link (ends with .png/.jpg) or use data URL.</p>
 
         <input formControlName="github_url" placeholder="GitHub URL"
                class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
@@ -88,7 +92,11 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
           <input formControlName="title" class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
-          <input formControlName="picture_url" class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
+          <input formControlName="picture_url" (input)="onPictureUrlChange()" class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
+          <div *ngIf="previewImage" class="mt-3">
+            <img [src]="previewImage" alt="preview" class="w-32 h-20 object-cover rounded" fallbackImage="/profile.jpeg" referrerpolicy="no-referrer" />
+          </div>
+          <p *ngIf="projectForm.value.picture_url && !previewImage" class="text-sm text-red-400 mt-2">Cannot load image from URL. Try a direct image link (ends with .png/.jpg) or use data URL.</p>
           <input formControlName="github_url" class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
           <input formControlName="live_url" class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
           <input type="date" formControlName="start_date" class="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg" />
@@ -138,8 +146,8 @@
         </p>
 
         <div class="flex gap-4 mt-6">
-          <button (click)="cancelDelete()" class="flex-1 py-2 bg-gray-700 rounded-lg">Cancel</button>
-          <button (click)="confirmDeleteAction()" class="flex-1 py-2 bg-red-600 rounded-lg">Delete</button>
+          <button (click)="cancelDelete()" [disabled]="submitting" class="flex-1 py-2 bg-gray-700 rounded-lg hover:bg-gray-600 disabled:opacity-50">Cancel</button>
+          <button (click)="confirmDeleteAction()" [disabled]="submitting" class="flex-1 py-2 bg-red-600 rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed">{{ submitting ? 'Deleting...' : 'Delete' }}</button>
         </div>
 
       </div>

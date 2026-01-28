@@ -39,7 +39,8 @@
             [src]="p.picture_url"
             alt="project preview"
             class="w-full h-full object-cover"
-            (error)="$any($event.target).src = 'assets/img/default_project.png'"
+            fallbackImage="/profile.jpeg"
+            referrerpolicy="no-referrer"
           />
         </div>
 

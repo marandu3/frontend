@@ -78,11 +78,11 @@ export class PortfolioService {
   }
 
   updateEducation(level: string, data: Education): Observable<Education> {
-    return this.http.put<Education>(`${this.BASE}/education/${level}`, data);
+    return this.http.put<Education>(`${this.BASE}/education/${encodeURIComponent(level)}`, data);
   }
 
   deleteEducation(level: string): Observable<any> {
-    return this.http.delete(`${this.BASE}/education/${level}`);
+    return this.http.delete(`${this.BASE}/education/${encodeURIComponent(level)}`);
   }
 
 
@@ -96,11 +96,11 @@ export class PortfolioService {
   }
 
   updateSkill(name: string, data: Skill): Observable<Skill> {
-    return this.http.put<Skill>(`${this.BASE}/skills/${name}`, data);
+    return this.http.put<Skill>(`${this.BASE}/skills/${encodeURIComponent(name)}`, data);
   }
 
   deleteSkill(name: string): Observable<any> {
-    return this.http.delete(`${this.BASE}/skills/${name}`);
+    return this.http.delete(`${this.BASE}/skills/${encodeURIComponent(name)}`);
   }
 
 
@@ -114,11 +114,11 @@ export class PortfolioService {
   }
 
   updateProject(name: string, data: Project): Observable<Project> {
-    return this.http.put<Project>(`${this.BASE}/projects/${name}`, data);
+    return this.http.put<Project>(`${this.BASE}/projects/${encodeURIComponent(name)}`, data);
   }
 
   deleteProject(name: string): Observable<any> {
-    return this.http.delete(`${this.BASE}/projects/${name}`);
+    return this.http.delete(`${this.BASE}/projects/${encodeURIComponent(name)}`);
   }
 
 
@@ -132,11 +132,11 @@ export class PortfolioService {
   }
 
   updateTimelineEvent(title: string, data: TimelineEvent): Observable<TimelineEvent> {
-    return this.http.put<TimelineEvent>(`${this.BASE}/timeline/${title}`, data);
+    return this.http.put<TimelineEvent>(`${this.BASE}/timeline/${encodeURIComponent(title)}`, data);
   }
 
   deleteTimelineEvent(title: string): Observable<any> {
-    return this.http.delete(`${this.BASE}/timeline/${title}`);
+    return this.http.delete(`${this.BASE}/timeline/${encodeURIComponent(title)}`);
   }
 
 }

@@ -90,8 +90,8 @@
         <p class="text-lg font-bold mb-4">Are you sure?</p>
         <p class="text-gray-300">Delete event <strong>{{ toDelete?.title }}</strong>?</p>
         <div class="flex gap-4 mt-6">
-          <button (click)="cancelDelete()" class="flex-1 py-2 bg-gray-700 rounded-lg">Cancel</button>
-          <button (click)="confirmDeleteAction()" class="flex-1 py-2 bg-red-600 rounded-lg">Delete</button>
+          <button (click)="cancelDelete()" [disabled]="submitting" class="flex-1 py-2 bg-gray-700 rounded-lg hover:bg-gray-600 disabled:opacity-50">Cancel</button>
+          <button (click)="confirmDeleteAction()" [disabled]="submitting" class="flex-1 py-2 bg-red-600 rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed">{{ submitting ? 'Deleting...' : 'Delete' }}</button>
         </div>
       </div>
     </div>

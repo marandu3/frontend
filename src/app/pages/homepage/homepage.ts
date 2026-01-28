@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PortfolioService, Profile } from '../../services/portfolio.service';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
+import { FallbackImageDirective } from '../../directives/fallback-image';
 
 interface SocialMedia {
   name: string;
@@ -12,7 +13,7 @@ interface SocialMedia {
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [CommonModule, NgForOf, NgIf],
+  imports: [CommonModule, NgForOf, NgIf, FallbackImageDirective],
   templateUrl: './homepage.html',
 })
 export class Homepage implements OnInit {
