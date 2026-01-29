@@ -1,19 +1,20 @@
 <div class="flex flex-col min-h-screen bg-gray-900 text-white scroll-smooth">
 
-  <!-- Navbar -->
-  <ng-container *ngIf="!admin">
+  <!-- Navbar - Show on guest pages -->
+  <ng-container *ngIf="!isAdminPage || !isAuthenticated">
     <app-navbar class="fixed top-0 left-0 w-full z-50"></app-navbar>
   </ng-container>
 
-  <ng-container *ngIf="admin">
+  <!-- Admin Navbar - Only show on admin pages when authenticated -->
+  <ng-container *ngIf="isAdminPage && isAuthenticated">
     <app-admin-navbar 
         class="fixed top-0 left-0 w-full z-50"
         (backToPublicEvent)="disableAdmin()">
     </app-admin-navbar>
   </ng-container>
 
-  <!-- Main content -->
-  <main class="flex-grow">
+  <!-- Main content starts right after navbar -->
+  <main class="flex-grow ">
     <router-outlet></router-outlet>
   </main>
 

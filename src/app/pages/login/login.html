@@ -1,0 +1,52 @@
+<div class="login-container">
+  <div class="login-box">
+    <h1>Admin Login</h1>
+    
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          formControlName="username"
+          placeholder="Enter your username"
+          class="form-control"
+          [class.is-invalid]="isFieldInvalid('username')"
+        />
+        <div class="error-message" *ngIf="isFieldInvalid('username')">
+          <span *ngIf="loginForm.get('username')?.errors?.['required']">Username is required</span>
+          <span *ngIf="loginForm.get('username')?.errors?.['minlength']">Username must be at least 3 characters</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          placeholder="Enter your password"
+          class="form-control"
+          [class.is-invalid]="isFieldInvalid('password')"
+        />
+        <div class="error-message" *ngIf="isFieldInvalid('password')">
+          <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</span>
+          <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters</span>
+        </div>
+      </div>
+
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-login"
+        [disabled]="!loginForm.valid || isLoading"
+      >
+        <span *ngIf="!isLoading">Login</span>
+        <span *ngIf="isLoading">Logging in...</span>
+      </button>
+    </form>
+  </div>
+</div>

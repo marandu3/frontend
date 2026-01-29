@@ -11,6 +11,8 @@ import { Cprojects } from './pages/adminpages/cprojects/cprojects';
 import { Ctimeline } from './pages/adminpages/ctimeline/ctimeline';
 import { Ceducation } from './pages/adminpages/ceducation/ceducation';
 import { Cabout } from './pages/adminpages/cabout/cabout';
+import { Login } from './pages/login/login';
+import { AuthGuard } from './auth/auth.guard';
 
 
 export const routes: Routes = [
@@ -44,23 +46,32 @@ export const routes: Routes = [
     },
     {
         path: 'admindashboard',
-        component: Admindashboard
+        component: Admindashboard,
+        canActivate: [AuthGuard]
     },
     {
         path: 'createprojects',
-        component:Cprojects
+        component: Cprojects,
+        canActivate: [AuthGuard]
     },
     {
         path:'createabout',
-        component: Cabout
+        component: Cabout,
+        canActivate: [AuthGuard]
     },
     {
         path:'createtimeline',
-        component:Ctimeline
+        component: Ctimeline,
+        canActivate: [AuthGuard]
     },
     {
         path:'createeducation',
-        component:Ceducation
+        component: Ceducation,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'login',
+        component: Login
     },
     {
         path: '**',

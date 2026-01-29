@@ -2,6 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export interface LoginResponse {
+  access_token: string;
+  token_type: string;
+}
+
 // ---- Interfaces (matching your FastAPI models) ----
 export interface Profile {
   name: string;
@@ -57,6 +62,12 @@ export class PortfolioService {
 
   constructor(private http: HttpClient) {}
 
+  login(username: string, password: string): Observable<LoginResponse> {
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+    return this.http.post<LoginResponse>(`${this.BASE}/login`, formData);
+  }
 
   // ========== PROFILE ==========
   getProfile(): Observable<Profile[]> {

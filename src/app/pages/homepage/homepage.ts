@@ -15,6 +15,7 @@ interface SocialMedia {
   standalone: true,
   imports: [CommonModule, NgForOf, NgIf, FallbackImageDirective],
   templateUrl: './homepage.html',
+  styleUrls: ['./homepage.css']
 })
 export class Homepage implements OnInit {
   profile: Profile | null = null;

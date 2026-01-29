@@ -1,22 +1,24 @@
-<nav class="w-full bg-gray-900 text-white px-6 py-4 flex items-center justify-between shadow-lg">
+<nav class="w-full px-6 py-3 flex items-center justify-between bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-cyan-400 border-opacity-40 shadow-md backdrop-blur-sm">
   <!-- Left: Admin Title -->
-  <div class="text-xl font-bold tracking-wide">
-    Admin Panel
+  <div class="text-lg font-bold text-cyan-400 whitespace-nowrap">
+    ⚙️ Admin
   </div>
 
-  <!-- Middle: Nav Items -->
-  <div class="flex space-x-6">
-    <a routerLink="/admindashboard" routerLinkActive="text-blue-400" class="hover:text-blue-400">Profile</a>
-    <a routerLink="/createeducation" routerLinkActive="text-blue-400" class="hover:text-blue-400">Education</a>
-    <a routerLink="/createtimeline" routerLinkActive="text-blue-400" class="hover:text-blue-400">Timeline</a>
-    <a routerLink="/createabout" routerLinkActive="text-blue-400" class="hover:text-blue-400">Skills</a>
-    <a routerLink="/createprojects" routerLinkActive="text-blue-400" class="hover:text-blue-400">Projects</a>
-  </div>
+  <!-- Right: Nav Items + Exit Button -->
+  <div class="flex items-center gap-2 md:gap-4">
+    <a routerLink="/admindashboard" routerLinkActive="text-cyan-300 bg-slate-700" class="px-3 py-2 text-sm md:text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-slate-700 rounded transition-all duration-200 whitespace-nowrap">Dashboard</a>
+    <a routerLink="/createeducation" routerLinkActive="text-cyan-300 bg-slate-700" class="px-3 py-2 text-sm md:text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-slate-700 rounded transition-all duration-200 whitespace-nowrap">Education</a>
+    <a routerLink="/createtimeline" routerLinkActive="text-cyan-300 bg-slate-700" class="px-3 py-2 text-sm md:text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-slate-700 rounded transition-all duration-200 whitespace-nowrap">Timeline</a>
+    <a routerLink="/createabout" routerLinkActive="text-cyan-300 bg-slate-700" class="px-3 py-2 text-sm md:text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-slate-700 rounded transition-all duration-200 whitespace-nowrap">About</a>
+    <a routerLink="/createprojects" routerLinkActive="text-cyan-300 bg-slate-700" class="px-3 py-2 text-sm md:text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-slate-700 rounded transition-all duration-200 whitespace-nowrap">Projects</a>
 
-  <!-- Right: Exit Button -->
-  <button 
-    class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition"
-    (click)="backToPublic()">
-    Back to Public
-  </button>
+    <!-- Exit Button -->
+    <button 
+      class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-2 rounded text-sm md:text-base font-semibold whitespace-nowrap transition-all duration-200 shadow-md hover:shadow-red-500/50 ml-2"
+      (click)="backToPublic()">
+      🔐 Exit
+    </button>
+  </div>
 </nav>
+  
+
